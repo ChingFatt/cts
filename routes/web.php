@@ -42,6 +42,10 @@ Route::group(['prefix' => 'visitor', 'as' => 'visitor.', 'middleware' => ['auth'
         'as' => 'checkout',
         'uses' => 'VisitorController@checkout',
     ]);
+    Route::post('search', [
+        'as' => 'search',
+        'uses' => 'VisitorController@search',
+    ]);
 });
 
 Route::group(['prefix' => 'visitor', 'as' => 'visitor.'], function () {

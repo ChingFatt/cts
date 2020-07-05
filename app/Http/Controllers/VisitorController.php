@@ -195,4 +195,19 @@ class VisitorController extends Controller
             return redirect()->route('visitor.index');
         }
     }
+
+    public function search(Request $request)
+    {
+        $unit = Unit::where('unit_number', $request->unit_number)->first();
+
+        $visitors = Visitor::where('unit_id', $unit->id)
+            ->orderBy('visit_end')
+            ->orderBy('visit_start', 'desc')
+            ->latest()
+            ->paginate();
+
+        $units = Unit::has('occupants')->pluck('unit_number', 'id');
+
+        return view('visitor.index')->with(compact('visitors', 'units'));
+    }
 }
